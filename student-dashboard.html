@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(135deg, #f4f4f4 50%, #d9d9d9 50%);
+      font-family: 'Segoe UI', sans-serif;
+    }
+    .navbar {
+      background-color: #2c2c2c;
+    }
+    .navbar-brand, .nav-link, .navbar-text {
+      color: #fff !important;
+    }
+    .card {
+      border-radius: 20px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      margin-bottom: 30px;
+      background-color: #f0f0f0;
+      border: 2px solid #ccc;
+    }
+    .section {
+      background-color: #f7f7f7;
+      border-radius: 15px;
+      padding: 25px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.05);
+      border: 2px solid #ccc;
+    }
+    .section-title {
+      font-weight: 600;
+      margin-bottom: 15px;
+      color: #333;
+    }
+    .class-info {
+      font-size: 1.1rem;
+      color: #444;
+    }
+    label {
+      color: #000;
+      font-weight: 500;
+    }
+    input {
+      background-color: #fff;
+      border: 1px solid #aaa;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">🎓 Student Dashboard</a>
+      <span class="navbar-text">Welcome, Student!</span>
+    </div>
+  </nav>
+
+  <div class="container mt-5">
+    <h3 class="mb-4">Join a Class</h3>
+    <div class="card p-4">
+      <form id="joinClassForm">
+        <div class="mb-3">
+          <label for="classCode" class="form-label">Enter Class Code</label>
+          <input type="text" class="form-control" id="classCode" placeholder="e.g., ABC123" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Join Class</button>
+      </form>
+    </div>
+
+    <h3 class="mt-5 mb-4">Joined Classes</h3>
+    <div id="joinedClasses"></div>
+  </div>
+
+  <script>
+    const joinClassForm = document.getElementById('joinClassForm');
+    const joinedClasses = document.getElementById('joinedClasses');
+
+    const fakeClassData = {
+      'ABC123': {
+        name: 'Mathematics - Grade 10',
+        announcements: ['Test on Monday', 'Submit Homework by Friday'],
+        materials: ['algebra_notes.pdf', 'trigonometry_basics.pdf']
+      },
+      'XYZ789': {
+        name: 'Web Development',
+        announcements: ['Project due next week', 'Check assignment portal'],
+        materials: ['html_intro.pdf', 'css_guide.pdf']
+      }
+    };
+
+    joinClassForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const code = document.getElementById('classCode').value.trim().toUpperCase();
+      const classData = fakeClassData[code];
+
+      if (!classData) {
+        alert('Invalid class code');
+        return;
+      }
+
+      const classCard = document.createElement('div');
+      classCard.className = 'section mb-4';
+      classCard.innerHTML = `
+        <h5 class="section-title">📘 ${classData.name}</h5>
+        <p class="class-info">Class Code: <strong>${code}</strong></p>
+        <div class="mb-3">
+          <h6>📣 Announcements:</h6>
+          <ul>
+            ${classData.announcements.map(a => `<li>${a}</li>`).join('')}
+          </ul>
+        </div>
+        <div>
+          <h6>📥 Materials:</h6>
+          <ul>
+            ${classData.materials.map(m => `<li><a href="#" download>${m}</a></li>`).join('')}
+          </ul>
+        </div>
+      `;
+
+      joinedClasses.appendChild(classCard);
+      joinClassForm.reset();
+    });
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
